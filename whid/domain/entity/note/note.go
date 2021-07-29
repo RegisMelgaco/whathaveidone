@@ -11,5 +11,12 @@ type Note struct {
 }
 
 func NewNote(description string) (*Note, error) {
-	return &Note{}, nil
+	if len(description) == 0 {
+		return nil, ErrNoteMustHaveADescription
+	}
+
+	return &Note{
+		Description: description,
+		CreatedAt:   time.Now(),
+	}, nil
 }
