@@ -4,6 +4,7 @@ A tool for taking note of what have you done
 ## Features
 ### Note
 #### Data
+- ID
 - Created at
 - Description
 - Tags (not MVP)
