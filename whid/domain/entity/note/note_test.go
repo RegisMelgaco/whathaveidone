@@ -6,11 +6,19 @@ import (
 	"time"
 
 	"github.com/RegisMelgaco/whathaveidone/whid/domain/entity/note"
+	"github.com/RegisMelgaco/whathaveidone/whid/domain/shared"
 	"github.com/stretchr/testify/assert"
 )
 
 func TestNewNote(t *testing.T) {
 	t.Parallel()
+
+	now := time.Now()
+	var timeProvider shared.TimeProvider = &shared.TimeProviderMock{
+		NowFunc: func() time.Time {
+			return now
+		},
+	}
 
 	cases := []struct {
 		testName    string
@@ -46,13 +54,7 @@ func TestNewNote(t *testing.T) {
 		t.Run(c.testName, func(t *testing.T) {
 			t.Parallel()
 
-			actual, err := note.NewNote(c.description)
-
-			if actual != nil && c.expected != nil {
-				createdAtDelta := actual.CreatedAt.Sub(c.expected.CreatedAt)
-				assert.LessOrEqual(t, createdAtDelta, time.Second)
-				c.expected.CreatedAt = actual.CreatedAt
-			}
+			actual, err := note.NewNote(timeProvider, c.description)
 
 			assert.Equal(t, c.expected, actual)
 			assert.Equal(t, c.expectedErr, err)

@@ -1,6 +1,10 @@
 package note
 
-import "time"
+import (
+	"time"
+
+	"github.com/RegisMelgaco/whathaveidone/whid/domain/shared"
+)
 
 type Note struct {
 	Id          int
@@ -10,7 +14,7 @@ type Note struct {
 	DeletedAt   time.Time
 }
 
-func NewNote(description string) (*Note, error) {
+func NewNote(timeProvicer shared.TimeProvider, description string) (*Note, error) {
 	if len(description) == 0 {
 		return nil, ErrNoteMustHaveADescription
 	}
