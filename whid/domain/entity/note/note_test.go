@@ -32,11 +32,8 @@ func TestNewNote(t *testing.T) {
 			description: "Buy some bread.",
 
 			expected: &note.Note{
-				Id:          0,
 				Description: "Buy some bread.",
-				IsDeleted:   false,
-				CreatedAt:   time.Now(),
-				DeletedAt:   time.Time{},
+				CreatedAt:   timeProvider.Now(),
 			},
 			expectedErr: nil,
 		},
